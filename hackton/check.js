@@ -11,11 +11,11 @@ function load() {
     loadingScreen.style.display = "block"; // Show the loading screen
 
     var storedParagraph = sessionStorage.getItem("a");
-    var loadingScreen = document.getElementById("last");
+    var loadingScreen1 = document.getElementById("last");
 
     const text = storedParagraph;
 
-    fetch("http://127.0.0.1:5000", {
+    fetch("https://290e-196-189-16-184.ngrok-free.app", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -24,7 +24,9 @@ function load() {
         })
         .then(response => response.json())
         .then(data => {
-            loadingScreen.textContent = data;
+            loadingScreen1.textContent = data;
+                loadingScreen.style.display = "none";
+
             console.log(data);
         })
         .catch(error => {
