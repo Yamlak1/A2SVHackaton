@@ -1,58 +1,36 @@
- 
-function start(){
+function start() {
+    var loadingScreen = document.getElementById("loadingScreen");
+    loadingScreen.style.display = "block"; // Show the loading screen
 
-    var loadingScreen = document.getElementById("word");
-
-    const word=loadingScreen.value;
-    
-
+    var word = document.getElementById("word").value;
     sessionStorage.setItem("a", word);
-
-
-
-
-
-
 }
 
+function load() {
+    var loadingScreen = document.getElementById("loadingScreen");
+    loadingScreen.style.display = "block"; // Show the loading screen
 
-
-
-
-function load(){
-
-
-    const storedParagraph = sessionStorage.getItem('a');
-
-
+    var storedParagraph = sessionStorage.getItem("a");
     var loadingScreen = document.getElementById("last");
 
-   
-       
-            const text =storedParagraph;
-             
-            // Send the text to your Flask app running on 127.0.0.1
-            fetch('http://127.0.0.1:5000', { // Assuming your Flask app is running on port 5000
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body:  text 
-            })
-            .then(response => response.json())
-            .then(data => {
+    const text = storedParagraph;
 
-                loadingScreen.textContent=data
-                console.log( data);
-
-
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-       
-    
-
-
-
+    fetch("http://127.0.0.1:5000", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: text
+        })
+        .then(response => response.json())
+        .then(data => {
+            loadingScreen.textContent = data;
+            console.log(data);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        })
+        .finally(() => {
+            loadingScreen.style.display = "none"; // Hide the loading screen when the response is ready
+        });
 }
